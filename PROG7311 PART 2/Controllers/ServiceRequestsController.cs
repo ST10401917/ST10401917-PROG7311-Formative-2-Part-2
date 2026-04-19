@@ -72,16 +72,27 @@ namespace PROG7311_PART_2.Controllers
         // DELETE
         public async Task<IActionResult> Delete(int id)
         {
-            var request = await _context.ServiceRequests.FindAsync(id);
+            var request = await _context.ServiceRequests
+                .FirstOrDefaultAsync(x => x.ServiceRequestId == id);
+
+            if (request == null)
+                return NotFound();
+
             return View(request);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var request = await _context.ServiceRequests.FindAsync(id);
+
+            if (request == null)
+                return NotFound();
+
             _context.ServiceRequests.Remove(request);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
     }

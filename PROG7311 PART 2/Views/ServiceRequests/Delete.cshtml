@@ -6,5 +6,7 @@
 
 <form asp-action="Delete">
     <input type="hidden" asp-for="ServiceRequestId" />
-    <button class="btn btn-danger">Delete</button>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
 </form>

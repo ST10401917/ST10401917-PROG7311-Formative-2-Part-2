@@ -77,6 +77,15 @@ namespace PROG7311_PART_2.Controllers
 
             if (file != null)
             {
+                var extension = Path.GetExtension(file.FileName).ToLower();
+
+                if (extension != ".pdf")
+                {
+                    ModelState.AddModelError("file", "Only PDF files are allowed.");
+                    ViewBag.Clients = _context.Clients.ToList();
+                    return View(contract);
+                }
+
                 var fileName = Guid.NewGuid() + "_" + file.FileName;
                 var path = Path.Combine(folder, fileName);
 
