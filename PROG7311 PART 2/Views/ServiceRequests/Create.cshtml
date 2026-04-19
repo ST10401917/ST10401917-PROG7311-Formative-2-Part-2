@@ -1,0 +1,31 @@
+﻿@model ServiceRequest
+
+<h2>Create Service Request</h2>
+
+<form asp-action="Create" method="post">
+
+    <select name="ContractId" class="form-control mb-2">
+        @foreach (var c in ViewBag.Contracts)
+        {
+            <option value="@c.ContractId">
+                @c.Client.Name - #@c.ContractId (@c.Status)
+            </option>
+        }
+    </select>
+
+    <input name="Description" class="form-control mb-2" placeholder="Description" />
+
+    <input name="CostUSD" id="usd" class="form-control mb-2" placeholder="USD" />
+    <input name="CostZAR" id="zar" class="form-control mb-2" placeholder="ZAR (auto)" readonly />
+
+    <button class="btn btn-success">Save</button>
+</form>
+
+<script>
+    document.getElementById("usd").addEventListener("input", async function () {
+        let res = await fetch('/ServiceRequests/GetRate');
+        let rate = await res.json();
+
+        document.getElementById("zar").value = this.value * rate;
+    });
+</script>

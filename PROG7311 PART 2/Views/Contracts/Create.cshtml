@@ -1,0 +1,45 @@
+﻿@model Contract
+
+<h2>Create Contract</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+
+    <!-- Client -->
+    <label>Client</label>
+    <select name="ClientId" class="form-control mb-2">
+        @foreach (var c in ViewBag.Clients)
+        {
+            <option value="@c.ClientId">@c.Name</option>
+        }
+    </select>
+
+    <!-- Start Date -->
+    <label>Start Date</label>
+    <input type="date" name="StartDate" class="form-control mb-2" />
+
+    <!-- End Date -->
+    <label>End Date</label>
+    <input type="date" name="EndDate" class="form-control mb-2" />
+
+    <!-- Service Level -->
+    <label>Service Level</label>
+    <select name="type" class="form-control mb-2">
+        <option value="Standard">Standard</option>
+        <option value="Premium">Premium</option>
+    </select>
+
+    <!-- Contract Status (NEW FIX) -->
+    <label>Status</label>
+    <select name="Status" class="form-control mb-2">
+        <option value="Draft">Draft</option>
+        <option value="Active">Active</option>
+        <option value="Expired">Expired</option>
+        <option value="OnHold">On Hold</option>
+    </select>
+
+    <!-- File Upload -->
+    <label>Signed Agreement (PDF)</label>
+    <input type="file" name="file" class="form-control mb-2" />
+
+    <button class="btn btn-success">Save</button>
+</form>
