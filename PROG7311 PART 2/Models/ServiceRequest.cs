@@ -1,4 +1,6 @@
-﻿namespace PROG7311_PART_2.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PROG7311_PART_2.Models
 {
     public enum RequestStatus
     {
@@ -9,13 +11,20 @@
 
     public class ServiceRequest
     {
+        [Key]
         public int ServiceRequestId { get; set; }
 
+        [Required(ErrorMessage = "Contract is required")]
         public int ContractId { get; set; }
-        public Contract Contract { get; set; }
 
-        public string Description { get; set; }
+        public Contract? Contract { get; set; }
 
+        [Required(ErrorMessage = "Description is required")]
+        [StringLength(200)]
+        public string? Description { get; set; }
+
+        [Required(ErrorMessage = "USD cost is required")]
+        [Range(0.01, 1000000, ErrorMessage = "Cost must be greater than 0")]
         public decimal CostUSD { get; set; }
         public decimal CostZAR { get; set; }
 
