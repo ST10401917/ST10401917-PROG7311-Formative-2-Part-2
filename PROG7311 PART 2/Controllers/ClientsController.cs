@@ -68,6 +68,8 @@ namespace PROG7311_PART_2.Controllers
             return View(client);
         }
 
+
+
         // GET: Delete
         public async Task<IActionResult> Delete(int? id)
         {

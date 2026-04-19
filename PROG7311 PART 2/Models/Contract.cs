@@ -34,8 +34,6 @@ namespace PROG7311_PART_2.Models
         [StringLength(50)]
         public string? ServiceLevel { get; set; }
 
-        // Optional file (but you can make it required if needed)
-        [Display(Name = "Signed Agreement")]
         public string? SignedAgreementPath { get; set; }
 
         public ICollection<ServiceRequest> ServiceRequests { get; set; } = new List<ServiceRequest>();

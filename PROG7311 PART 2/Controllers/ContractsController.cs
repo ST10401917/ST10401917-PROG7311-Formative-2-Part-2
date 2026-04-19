@@ -45,24 +45,31 @@ namespace PROG7311_PART_2.Controllers
 
         // POST: Create (FACTORY + FILE UPLOAD)
         [HttpPost]
-        public async Task<IActionResult> Create(Contract contract, IFormFile file, string type)
+        public async Task<IActionResult> Create(Contract contract, IFormFile file)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.Clients = _context.Clients.ToList();
+
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+
                 return View(contract);
             }
 
-            // 🏭 FACTORY METHOD
-            var factory = ContractFactory.GetContract(type);
+            var factory = ContractFactory.GetContract(contract.ServiceLevel);
             var newContract = factory.Create(
             contract.ClientId,
             contract.StartDate,
             contract.EndDate,
-            contract.Status   // ✅ PASS STATUS
+            contract.Status   
              );
 
-            // 📁 FILE UPLOAD
+            newContract.ServiceLevel = contract.ServiceLevel;
+
+
             var folder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/files");
 
             if (!Directory.Exists(folder))
@@ -82,7 +89,6 @@ namespace PROG7311_PART_2.Controllers
             _context.Add(newContract);
             await _context.SaveChangesAsync();
 
-            // 👀 OBSERVER NOTIFICATION
             _notificationService.NotifyContractChange(newContract);
 
             return RedirectToAction(nameof(Index));
