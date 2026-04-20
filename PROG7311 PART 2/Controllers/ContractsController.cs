@@ -103,7 +103,7 @@ namespace PROG7311_PART_2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // 📥 DOWNLOAD FILE
+        // file download
         public IActionResult Download(string path)
         {
             var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", path.TrimStart('/'));

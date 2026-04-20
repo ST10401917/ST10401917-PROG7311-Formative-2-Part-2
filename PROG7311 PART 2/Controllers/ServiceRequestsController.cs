@@ -43,7 +43,6 @@ namespace PROG7311_PART_2.Controllers
             var contract = await _context.Contracts
                 .FirstOrDefaultAsync(c => c.ContractId == request.ContractId);
 
-            // 🚫 WORKFLOW RULE ENFORCEMENT
             if (contract == null)
             {
                 ModelState.AddModelError("", "Contract not found.");
@@ -59,7 +58,7 @@ namespace PROG7311_PART_2.Controllers
                 return View(request);
             }
 
-            // 🌍 Currency conversion (your existing logic)
+            // Currency conversion 
             var rate = await _currencyService.GetUsdToZarRate();
             request.CostZAR = request.CostUSD * rate;
 
